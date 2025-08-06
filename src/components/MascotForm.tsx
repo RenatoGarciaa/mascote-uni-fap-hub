@@ -265,19 +265,20 @@ const MascotForm = () => {
               
               <div>
                 <Label htmlFor="arquivo" className="text-white font-medium mb-3 block">Arquivo do desenho (PNG ou PDF apenas) *</Label>
-                <div className="relative overflow-visible min-h-[80px]">
-  <Input
-    id="arquivo"
-    type="file"
-    accept=".png,.pdf"
-    onChange={handleFileChange}
-    className="bg-transparent text-white file:mr-4 file:py-2 file:px-5 file:rounded-md file:border-none file:text-sm file:font-semibold file:bg-unifap-orange file:text-white hover:file:bg-unifap-orange/90 file:transition-all"
-    required
-  />
-  <p className="text-sm text-gray-400 mt-3">
-    Formatos aceitos: PNG, PDF (máx. 10MB)
-  </p>
-</div>
+                <div className="bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-unifap-pink transition-colors">
+                  <Input
+                    id="arquivo"
+                    type="file"
+                    accept=".png,.pdf"
+                    onChange={handleFileChange}
+                    className="bg-transparent border-none text-white file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-unifap-orange file:text-white hover:file:bg-unifap-orange/90 file:transition-colors"
+                    required
+                  />
+                  <p className="text-sm text-gray-400 mt-3">
+                    Formatos aceitos: PNG, PDF (máx. 10MB)
+                  </p>
+                </div>
+              </div>
               
               <div>
                 <Label htmlFor="justificativa" className="text-white font-medium mb-3 block">Justificativa/Conceito do mascote *</Label>
