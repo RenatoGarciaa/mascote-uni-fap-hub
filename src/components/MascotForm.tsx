@@ -54,7 +54,7 @@ const MascotForm = () => {
     }
 
     try {
-      const webhookUrl = "https://seu-webhook-url.com"; // 🔁 Substitua pela URL real
+      const webhookUrl = "https://hook.us2.make.com/rrwwnw9mt93xzypyprtjci8s6svos5mq"; // 🔁 Webhook
 
       const data = new FormData();
       data.append("nome", formData.nome);
