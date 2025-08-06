@@ -272,7 +272,7 @@ const MascotForm = () => {
               type="submit"
               className="bg-unifap-orange hover:bg-unifap-orange/90 text-white font-semibold text-lg px-12 py-4 rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border-0"
             >
-              ✈️ Enviar e Receber Diagnóstico
+              ✈️ Enviar informações
             </Button>
           </div>
 
@@ -282,7 +282,7 @@ const MascotForm = () => {
               <div className="w-6 h-6 bg-unifap-orange rounded-full flex items-center justify-center">
                 <span className="text-white text-sm">✓</span>
               </div>
-              <h4 className="text-white font-semibold">O que você receberá:</h4>
+              <h4 className="text-white font-semibold">O que faremos com as informações que você enviar?</h4>
             </div>
             <ul className="space-y-2 text-gray-300 ml-9">
               <li>• Análise detalhada da sua proposta de mascote</li>
