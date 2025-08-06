@@ -1,4 +1,4 @@
-import { useState } from "react";
+Vou enviar o codigo original para vc adicionar esse ajuste. N altere a estrutura do codigo, apenas adapte para que eu possa inserir um webhook no botao: import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,76 +24,55 @@ const MascotForm = () => {
     declaroOriginalidade: false,
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    const requiredFields = [
+      'nome', 'curso', 'matricula', 'turno', 'telefone', 'email', 
+      'nomeMascote', 'arquivo', 'justificativa'
+    ];
+    
+    for (const field of requiredFields) {
+      if (!formData[field as keyof typeof formData]) {
+        toast({
+          title: "Campo obrigatório",
+          description: Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
 
-  const requiredFields = [
-    'nome', 'curso', 'matricula', 'turno', 'telefone', 'email', 
-    'nomeMascote', 'arquivo', 'justificativa'
-  ];
-
-  for (const field of requiredFields) {
-    if (!formData[field as keyof typeof formData]) {
+    if (!formData.concordoTermos || !formData.declaroOriginalidade) {
       toast({
-        title: "Campo obrigatório",
-        description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
+        title: "Declarações obrigatórias",
+        description: "Por favor, marque todas as declarações obrigatórias.",
         variant: "destructive",
       });
       return;
     }
-  }
 
-  if (!formData.concordoTermos || !formData.declaroOriginalidade) {
     toast({
-      title: "Declarações obrigatórias",
-      description: "Por favor, marque todas as declarações obrigatórias.",
-      variant: "destructive",
+      title: "Inscrição enviada com sucesso! 🎉",
+      description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
     });
-    return;
-  }
+  };
 
-  try {
-    const payload = new FormData();
-    payload.append("nome", formData.nome);
-    payload.append("curso", formData.curso);
-    payload.append("matricula", formData.matricula);
-    payload.append("turno", formData.turno);
-    payload.append("telefone", formData.telefone);
-    payload.append("email", formData.email);
-    payload.append("nomeMascote", formData.nomeMascote);
-    payload.append("justificativa", formData.justificativa);
-    payload.append("concordoTermos", formData.concordoTermos ? "true" : "false");
-    payload.append("declaroOriginalidade", formData.declaroOriginalidade ? "true" : "false");
-
-    if (formData.arquivo) {
-      payload.append("arquivo", formData.arquivo);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.includes('png') && !file.type.includes('pdf')) {
+        toast({
+          title: "Formato inválido",
+          description: "Por favor, envie apenas arquivos PNG ou PDF.",
+          variant: "destructive",
+        });
+        return;
+      }
+      setFormData({ ...formData, arquivo: file });
     }
-
-    // 🔗 Substitua abaixo com a URL real do seu webhook
-    const webhookURL = "https://hook.us2.make.com/rrwwnw9mt93xzypyprtjci8s6svos5mq";
-
-    const response = await fetch(webhookURL, {
-      method: "POST",
-      body: payload
-    });
-
-    if (response.ok) {
-      toast({
-        title: "Inscrição enviada com sucesso! 🎉",
-        description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
-      });
-    } else {
-      throw new Error("Erro ao enviar para o webhook");
-    }
-  } catch (error) {
-    toast({
-      title: "Erro no envio",
-      description: "Houve um problema ao enviar seus dados. Tente novamente mais tarde.",
-      variant: "destructive",
-    });
-    console.error(error);
-  }
-};
+  };
 
   return (
     <Card className="w-full max-w-4xl mx-auto bg-gray-900/95 backdrop-blur-sm shadow-2xl border border-gray-700 rounded-2xl">
