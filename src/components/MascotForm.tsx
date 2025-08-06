@@ -265,7 +265,7 @@ const MascotForm = () => {
               
               <div>
                 <Label htmlFor="arquivo" className="text-white font-medium mb-3 block">Arquivo do desenho (PNG ou PDF apenas) *</Label>
-                <div className="bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-unifap-pink transition-colors">
+                <div className="bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-unifap-pink transition-colors overflow-visible min-h-[6rem]">
                   <Input
   id="arquivo"
   type="file"
