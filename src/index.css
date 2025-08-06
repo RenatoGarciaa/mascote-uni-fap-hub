@@ -2,14 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system for Mascote UniFAP. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 228 45% 15%;
+    --foreground: 210 40% 98%;
+    
+    /* UniFAP Brand Colors */
+    --unifap-blue: 220 100% 25%;
+    --unifap-cyan: 180 100% 50%;
+    --unifap-orange: 25 100% 55%;
+    --unifap-yellow: 45 100% 55%;
+    --unifap-pink: 330 100% 70%;
+    --unifap-red: 0 100% 55%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--unifap-blue)), hsl(var(--unifap-cyan)));
+    --gradient-warm: linear-gradient(135deg, hsl(var(--unifap-orange)), hsl(var(--unifap-yellow)));
+    --gradient-vibrant: linear-gradient(135deg, hsl(var(--unifap-pink)), hsl(var(--unifap-cyan)));
+    
+    /* Shadows */
+    --shadow-mascot: 0 10px 30px -5px hsl(var(--unifap-blue) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--unifap-cyan) / 0.4);
+    
+    /* Animations */
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
