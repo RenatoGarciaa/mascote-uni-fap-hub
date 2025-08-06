@@ -77,7 +77,7 @@ const Index = () => {
           
           {/* Subtitle */}
           <h2 className="text-xl md:text-2xl lg:text-3xl font-modern font-bold text-white mb-8 md:mb-12 drop-shadow-lg leading-relaxed">
-            A nossa história vai ganhar uma cara nova, e quem cria é você!
+            Vamos renovar nossa identidade, e a sua inspiração é o ponto de partida!
           </h2>
           
           {/* CTA Button */}
