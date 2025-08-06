@@ -24,55 +24,76 @@ const MascotForm = () => {
     declaroOriginalidade: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validate required fields
-    const requiredFields = [
-      'nome', 'curso', 'matricula', 'turno', 'telefone', 'email', 
-      'nomeMascote', 'arquivo', 'justificativa'
-    ];
-    
-    for (const field of requiredFields) {
-      if (!formData[field as keyof typeof formData]) {
-        toast({
-          title: "Campo obrigatório",
-          description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!formData.concordoTermos || !formData.declaroOriginalidade) {
+  const requiredFields = [
+    'nome', 'curso', 'matricula', 'turno', 'telefone', 'email', 
+    'nomeMascote', 'arquivo', 'justificativa'
+  ];
+
+  for (const field of requiredFields) {
+    if (!formData[field as keyof typeof formData]) {
       toast({
-        title: "Declarações obrigatórias",
-        description: "Por favor, marque todas as declarações obrigatórias.",
+        title: "Campo obrigatório",
+        description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
         variant: "destructive",
       });
       return;
     }
+  }
 
+  if (!formData.concordoTermos || !formData.declaroOriginalidade) {
     toast({
-      title: "Inscrição enviada com sucesso! 🎉",
-      description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
+      title: "Declarações obrigatórias",
+      description: "Por favor, marque todas as declarações obrigatórias.",
+      variant: "destructive",
     });
-  };
+    return;
+  }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (!file.type.includes('png') && !file.type.includes('pdf')) {
-        toast({
-          title: "Formato inválido",
-          description: "Por favor, envie apenas arquivos PNG ou PDF.",
-          variant: "destructive",
-        });
-        return;
-      }
-      setFormData({ ...formData, arquivo: file });
+  try {
+    const payload = new FormData();
+    payload.append("nome", formData.nome);
+    payload.append("curso", formData.curso);
+    payload.append("matricula", formData.matricula);
+    payload.append("turno", formData.turno);
+    payload.append("telefone", formData.telefone);
+    payload.append("email", formData.email);
+    payload.append("nomeMascote", formData.nomeMascote);
+    payload.append("justificativa", formData.justificativa);
+    payload.append("concordoTermos", formData.concordoTermos ? "true" : "false");
+    payload.append("declaroOriginalidade", formData.declaroOriginalidade ? "true" : "false");
+
+    if (formData.arquivo) {
+      payload.append("arquivo", formData.arquivo);
     }
-  };
+
+    // 🔗 Substitua abaixo com a URL real do seu webhook
+    const webhookURL = "https://seu-webhook-url.com";
+
+    const response = await fetch(webhookURL, {
+      method: "POST",
+      body: payload
+    });
+
+    if (response.ok) {
+      toast({
+        title: "Inscrição enviada com sucesso! 🎉",
+        description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
+      });
+    } else {
+      throw new Error("Erro ao enviar para o webhook");
+    }
+  } catch (error) {
+    toast({
+      title: "Erro no envio",
+      description: "Houve um problema ao enviar seus dados. Tente novamente mais tarde.",
+      variant: "destructive",
+    });
+    console.error(error);
+  }
+};
 
   return (
     <Card className="w-full max-w-4xl mx-auto bg-gray-900/95 backdrop-blur-sm shadow-2xl border border-gray-700 rounded-2xl">
