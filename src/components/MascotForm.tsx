@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,7 +37,7 @@ const MascotForm = () => {
       if (!formData[field as keyof typeof formData]) {
         toast({
           title: "Campo obrigatório",
-          description: Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.,
+          description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
           variant: "destructive",
         });
         return;
