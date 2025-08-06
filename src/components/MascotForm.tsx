@@ -24,20 +24,19 @@ const MascotForm = () => {
     declaroOriginalidade: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate required fields
+
     const requiredFields = [
       'nome', 'curso', 'matricula', 'turno', 'telefone', 'email', 
       'nomeMascote', 'arquivo', 'justificativa'
     ];
-    
+
     for (const field of requiredFields) {
       if (!formData[field as keyof typeof formData]) {
         toast({
           title: "Campo obrigatório",
-          description: Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.,
+          description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
           variant: "destructive",
         });
         return;
@@ -53,10 +52,46 @@ const MascotForm = () => {
       return;
     }
 
-    toast({
-      title: "Inscrição enviada com sucesso! 🎉",
-      description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
-    });
+    try {
+      const payload = new FormData();
+      payload.append("nome", formData.nome);
+      payload.append("curso", formData.curso);
+      payload.append("matricula", formData.matricula);
+      payload.append("turno", formData.turno);
+      payload.append("telefone", formData.telefone);
+      payload.append("email", formData.email);
+      payload.append("nomeMascote", formData.nomeMascote);
+      payload.append("justificativa", formData.justificativa);
+      payload.append("concordoTermos", formData.concordoTermos ? "true" : "false");
+      payload.append("declaroOriginalidade", formData.declaroOriginalidade ? "true" : "false");
+
+      if (formData.arquivo) {
+        payload.append("arquivo", formData.arquivo);
+      }
+
+      const webhookURL = "https://seu-webhook-url.com"; // Substitua pela URL real do seu webhook
+
+      const response = await fetch(webhookURL, {
+        method: "POST",
+        body: payload
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Inscrição enviada com sucesso! 🎉",
+          description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
+        });
+      } else {
+        throw new Error("Erro ao enviar para o webhook");
+      }
+    } catch (error) {
+      toast({
+        title: "Erro no envio",
+        description: "Houve um problema ao enviar seus dados. Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+      console.error(error);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,223 +110,65 @@ const MascotForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-gray-900/95 backdrop-blur-sm shadow-2xl border border-gray-700 rounded-2xl">
-      <CardHeader className="text-center border-b border-gray-700/50 pb-8">
-        <CardTitle className="text-3xl font-retro text-white mb-4">
-          📝 Formulário de Inscrição
-        </CardTitle>
-        <p className="text-gray-300 font-medium">
-          Concurso do Mascote UniFAP
-        </p>
-      </CardHeader>
-      <CardContent className="p-8">
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Dados do Participante */}
-          <div className="space-y-6">
-            <h3 className="text-xl font-retro text-unifap-orange flex items-center gap-2">
-              👤 Dados do Participante
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="nome" className="text-white font-medium mb-3 block">Nome completo *</Label>
-                <Input
-                  id="nome"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-cyan text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="Seu nome"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="email" className="text-white font-medium mb-3 block">E-mail *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-cyan text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="seu@email.com"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="curso" className="text-white font-medium mb-3 block">Curso *</Label>
-                <Input
-                  id="curso"
-                  value={formData.curso}
-                  onChange={(e) => setFormData({ ...formData, curso: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-cyan text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="Nome do seu curso"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="telefone" className="text-white font-medium mb-3 block">Telefone/WhatsApp</Label>
-                <Input
-                  id="telefone"
-                  type="tel"
-                  value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-cyan text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="(11) 99999-9999"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="matricula" className="text-white font-medium mb-3 block">Número de matrícula *</Label>
-                <Input
-                  id="matricula"
-                  value={formData.matricula}
-                  onChange={(e) => setFormData({ ...formData, matricula: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-cyan text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="Sua matrícula"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label className="text-white font-medium mb-3 block">Turno *</Label>
-                <RadioGroup
-                  value={formData.turno}
-                  onValueChange={(value) => setFormData({ ...formData, turno: value })}
-                  className="space-y-3"
-                >
-                  <div className="flex items-center space-x-3 bg-gray-800/50 p-3 rounded-lg border border-gray-600 hover:border-gray-500 transition-colors">
-                    <RadioGroupItem value="manha" id="manha" className="border-gray-500 text-unifap-cyan" />
-                    <Label htmlFor="manha" className="text-white cursor-pointer">Manhã</Label>
-                  </div>
-                  <div className="flex items-center space-x-3 bg-gray-800/50 p-3 rounded-lg border border-gray-600 hover:border-gray-500 transition-colors">
-                    <RadioGroupItem value="noite" id="noite" className="border-gray-500 text-unifap-cyan" />
-                    <Label htmlFor="noite" className="text-white cursor-pointer">Noite</Label>
-                  </div>
-                  <div className="flex items-center space-x-3 bg-gray-800/50 p-3 rounded-lg border border-gray-600 hover:border-gray-500 transition-colors">
-                    <RadioGroupItem value="ead" id="ead" className="border-gray-500 text-unifap-cyan" />
-                    <Label htmlFor="ead" className="text-white cursor-pointer">EAD</Label>
-                  </div>
-                  <div className="flex items-center space-x-3 bg-gray-800/50 p-3 rounded-lg border border-gray-600 hover:border-gray-500 transition-colors">
-                    <RadioGroupItem value="semipresencial" id="semipresencial" className="border-gray-500 text-unifap-cyan" />
-                    <Label htmlFor="semipresencial" className="text-white cursor-pointer">Semipresencial</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>📝 Formulário de Inscrição – Concurso do Mascote UniFAP</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label>Nome completo</Label>
+            <Input value={formData.nome} onChange={(e) => setFormData({ ...formData, nome: e.target.value })} />
           </div>
-
-          {/* Proposta do Mascote */}
-          <div className="space-y-6 border-t border-gray-700/50 pt-8">
-            <h3 className="text-xl font-retro text-unifap-pink flex items-center gap-2">
-              🎨 Proposta do Mascote
-            </h3>
-            
-            <div className="space-y-6">
-              <div>
-                <Label htmlFor="nomeMascote" className="text-white font-medium mb-3 block">Nome do mascote proposto *</Label>
-                <Input
-                  id="nomeMascote"
-                  value={formData.nomeMascote}
-                  onChange={(e) => setFormData({ ...formData, nomeMascote: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-pink text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="Nome do seu mascote"
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="arquivo" className="text-white font-medium mb-3 block">Arquivo do desenho (PNG ou PDF apenas) *</Label>
-                <div className="bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-unifap-pink transition-colors">
-                  <Input
-                    id="arquivo"
-                    type="file"
-                    accept=".png,.pdf"
-                    onChange={handleFileChange}
-                    className="bg-transparent border-none text-white file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-unifap-orange file:text-white hover:file:bg-unifap-orange/90 file:transition-colors"
-                    required
-                  />
-                  <p className="text-sm text-gray-400 mt-3">
-                    Formatos aceitos: PNG, PDF (máx. 10MB)
-                  </p>
-                </div>
-              </div>
-              
-              <div>
-                <Label htmlFor="justificativa" className="text-white font-medium mb-3 block">Justificativa/Conceito do mascote *</Label>
-                <Textarea
-                  id="justificativa"
-                  value={formData.justificativa}
-                  onChange={(e) => setFormData({ ...formData, justificativa: e.target.value })}
-                  className="bg-gray-800/80 border border-gray-600 focus:border-unifap-pink text-white rounded-lg px-4 py-4 min-h-32 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400 resize-none"
-                  placeholder="Descreva o conceito e a justificativa da sua proposta de mascote..."
-                  maxLength={1000}
-                  required
-                />
-              </div>
-            </div>
+          <div>
+            <Label>Curso</Label>
+            <Input value={formData.curso} onChange={(e) => setFormData({ ...formData, curso: e.target.value })} />
           </div>
-
-          {/* Declarações */}
-          <div className="space-y-6 border-t border-gray-700/50 pt-8">
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3 bg-gray-800/30 p-4 rounded-lg border border-gray-600">
-                <Checkbox
-                  id="termos"
-                  checked={formData.concordoTermos}
-                  onCheckedChange={(checked) => 
-                    setFormData({ ...formData, concordoTermos: checked === true })
-                  }
-                  className="mt-1 border-gray-500 data-[state=checked]:bg-unifap-cyan data-[state=checked]:border-unifap-cyan"
-                />
-                <Label htmlFor="termos" className="text-sm text-gray-300 leading-relaxed cursor-pointer">
-                  Declaro que li e concordo com todos os termos e regras descritos no edital do concurso do mascote UniFAP.
-                </Label>
-              </div>
-              
-              <div className="flex items-start space-x-3 bg-gray-800/30 p-4 rounded-lg border border-gray-600">
-                <Checkbox
-                  id="originalidade"
-                  checked={formData.declaroOriginalidade}
-                  onCheckedChange={(checked) => 
-                    setFormData({ ...formData, declaroOriginalidade: checked === true })
-                  }
-                  className="mt-1 border-gray-500 data-[state=checked]:bg-unifap-cyan data-[state=checked]:border-unifap-cyan"
-                />
-                <Label htmlFor="originalidade" className="text-sm text-gray-300 leading-relaxed cursor-pointer">
-                  Declaro que a criação submetida é original, de minha autoria, e não é cópia total ou parcial de qualquer outro personagem, desenho ou marca existente.
-                </Label>
-              </div>
-            </div>
+          <div>
+            <Label>Número de matrícula</Label>
+            <Input value={formData.matricula} onChange={(e) => setFormData({ ...formData, matricula: e.target.value })} />
           </div>
-
-          <div className="text-center pt-8">
-            <Button
-              type="submit"
-              className="bg-unifap-orange hover:bg-unifap-orange/90 text-white font-semibold text-lg px-12 py-4 rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border-0"
-            >
-              ✈️ Enviar informações
-            </Button>
+          <div>
+            <Label>Turno</Label>
+            <RadioGroup value={formData.turno} onValueChange={(turno) => setFormData({ ...formData, turno })}>
+              <div><RadioGroupItem value="manha" id="manha" /><Label htmlFor="manha">Manhã</Label></div>
+              <div><RadioGroupItem value="noite" id="noite" /><Label htmlFor="noite">Noite</Label></div>
+              <div><RadioGroupItem value="ead" id="ead" /><Label htmlFor="ead">EAD</Label></div>
+              <div><RadioGroupItem value="semipresencial" id="semi" /><Label htmlFor="semi">Semipresencial</Label></div>
+            </RadioGroup>
           </div>
-
-          {/* O que você receberá */}
-          <div className="bg-gray-800/30 border border-gray-600 rounded-lg p-6 mt-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-6 h-6 bg-unifap-orange rounded-full flex items-center justify-center">
-                <span className="text-white text-sm">✓</span>
-              </div>
-              <h4 className="text-white font-semibold">O que faremos com as informações que você enviar?</h4>
-            </div>
-            <ul className="space-y-2 text-gray-300 ml-9">
-              <li>• Análise detalhada da sua proposta de mascote</li>
-              <li>• Feedback sobre o conceito</li>
-            </ul>
+          <div>
+            <Label>Telefone para contato (WhatsApp)</Label>
+            <Input value={formData.telefone} onChange={(e) => setFormData({ ...formData, telefone: e.target.value })} />
           </div>
-        </form>
-      </CardContent>
-    </Card>
+          <div>
+            <Label>Email</Label>
+            <Input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+          </div>
+          <div>
+            <Label>Nome do Mascote</Label>
+            <Input value={formData.nomeMascote} onChange={(e) => setFormData({ ...formData, nomeMascote: e.target.value })} />
+          </div>
+          <div>
+            <Label>Arquivo da Proposta (PNG ou PDF)</Label>
+            <Input type="file" accept=".png,.pdf" onChange={handleFileChange} />
+          </div>
+          <div>
+            <Label>Justificativa</Label>
+            <Textarea value={formData.justificativa} onChange={(e) => setFormData({ ...formData, justificativa: e.target.value })} />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="termos" checked={formData.concordoTermos} onCheckedChange={(checked) => setFormData({ ...formData, concordoTermos: Boolean(checked) })} />
+            <Label htmlFor="termos">Declaro que li e estou de acordo com o regulamento.</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="originalidade" checked={formData.declaroOriginalidade} onCheckedChange={(checked) => setFormData({ ...formData, declaroOriginalidade: Boolean(checked) })} />
+            <Label htmlFor="originalidade">Declaro que a proposta é original e de minha autoria.</Label>
+          </div>
+          <Button type="submit">Enviar informações</Button>
+        </CardContent>
+      </Card>
+    </form>
   );
 };
 
