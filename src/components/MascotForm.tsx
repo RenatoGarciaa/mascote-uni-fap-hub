@@ -365,3 +365,4 @@ const MascotForm = () => {
     </Card>
   );
 };
+export default MascotForm;
