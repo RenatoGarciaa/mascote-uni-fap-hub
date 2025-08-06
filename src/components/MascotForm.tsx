@@ -337,7 +337,7 @@ const MascotForm = () => {
             </Button>
           </div>
 
-          {/* O que você receberá */}
+                    {/* O que você receberá */}
           <div className="bg-gray-800/30 border border-gray-600 rounded-lg p-6 mt-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-6 h-6 bg-unifap-orange rounded-full flex items-center justify-center">
@@ -349,6 +349,16 @@ const MascotForm = () => {
               <li>• Análise detalhada da sua proposta de mascote</li>
               <li>• Feedback sobre o conceito</li>
             </ul>
+            <div className="text-center mt-6">
+              <a
+                href="https://link-do-edital.com/edital.pdf" // 👉 substitua aqui pelo link real do edital
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-transparent text-unifap-cyan border border-unifap-cyan px-6 py-3 rounded-lg font-medium text-sm hover:bg-unifap-cyan hover:text-white transition-all"
+              >
+                📄 Acessar Edital do Concurso
+              </a>
+          </div>
           </div>
         </form>
       </CardContent>
