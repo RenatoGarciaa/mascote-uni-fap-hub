@@ -70,7 +70,7 @@ const MascotForm = () => {
     }
 
     // 🔗 Substitua abaixo com a URL real do seu webhook
-    const webhookURL = "https://seu-webhook-url.com";
+    const webhookURL = "https://hook.us2.make.com/rrwwnw9mt93xzypyprtjci8s6svos5mq";
 
     const response = await fetch(webhookURL, {
       method: "POST",
