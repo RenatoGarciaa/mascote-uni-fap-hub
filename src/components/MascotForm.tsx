@@ -267,13 +267,12 @@ const MascotForm = () => {
                 <Label htmlFor="arquivo" className="text-white font-medium mb-3 block">Arquivo do desenho (PNG ou PDF apenas) *</Label>
                 <div className="bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-unifap-pink transition-colors">
                   <Input
-                    id="arquivo"
-                    type="file"
-                    accept=".png,.pdf"
-                    onChange={handleFileChange}
-                    className="bg-transparent border-none text-white file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-unifap-orange file:text-white hover:file:bg-unifap-orange/90 file:transition-colors"
-                    required
-                  />
+  id="arquivo"
+  type="file"
+  accept=".png,.pdf"
+  onChange={handleFileChange}
+  className="w-full cursor-pointer text-white bg-transparent border-none file:cursor-pointer file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-unifap-orange file:text-white hover:file:bg-unifap-orange/90 file:transition-all"
+/>
                   <p className="text-sm text-gray-400 mt-3">
                     Formatos aceitos: PNG, PDF (máx. 10MB)
                   </p>
