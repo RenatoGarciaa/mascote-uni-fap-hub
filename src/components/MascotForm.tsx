@@ -1,4 +1,3 @@
-Vou enviar o codigo original para vc adicionar esse ajuste. N altere a estrutura do codigo, apenas adapte para que eu possa inserir um webhook no botao: import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
