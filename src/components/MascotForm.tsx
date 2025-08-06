@@ -25,51 +25,6 @@ const MascotForm = () => {
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Validate required fields
-    const requiredFields = [
-      'nome', 'curso', 'matricula', 'turno', 'telefone', 'email', 
-      'nomeMascote', 'arquivo', 'justificativa'
-    ];
-
-    for (const field of requiredFields) {
-      if (!formData[field as keyof typeof formData]) {
-        toast({
-          title: "Campo obrigatório",
-          description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-
-    if (!formData.concordoTermos || !formData.declaroOriginalidade) {
-      toast({
-        title: "Declarações obrigatórias",
-        description: "Por favor, marque todas as declarações obrigatórias.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      const webhookUrl = "https://hook.us2.make.com/rrwwnw9mt93xzypyprtjci8s6svos5mq"; // 🔁 Webhook
-
-      const data = new FormData();
-      data.append("nome", formData.nome);
-      data.append("curso", formData.curso);
-      data.append("matricula", formData.matricula);
-      data.append("turno", formData.turno);
-      data.append("telefone", formData.telefone);
-      data.append("email", formData.email);
-      data.append("nomeMascote", formData.nomeMascote);
-      data.append("justificativa", formData.justificativa);
-      data.append("arquivo", formData.arquivo as File);
-      data.append("concordoTermos", String(formData.concordoTermos));
-      data.append("declaroOriginalidade", String(formData.declaroOriginalidade));
-
-      const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   const requiredFields = [
@@ -163,6 +118,7 @@ const MascotForm = () => {
     console.error(error);
   }
 };
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
