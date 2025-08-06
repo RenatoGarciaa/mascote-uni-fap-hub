@@ -286,9 +286,7 @@ const MascotForm = () => {
             </div>
             <ul className="space-y-2 text-gray-300 ml-9">
               <li>• Análise detalhada da sua proposta de mascote</li>
-              <li>• Feedback especializado sobre o conceito</li>
-              <li>• Orientações para aprimoramento do design</li>
-              <li>• Cronograma do processo de avaliação</li>
+              <li>• Feedback sobre o conceito</li>
             </ul>
           </div>
         </form>
