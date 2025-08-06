@@ -333,7 +333,7 @@ const MascotForm = () => {
           <div className="text-center pt-8">
             <Button
               type="submit"
-              className="bg-unifap-orange hover:bg-unifap-orange/90 text-white font-semibold text-lg px-12 py-4 rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border-0"
+              className="w-full sm:w-auto bg-unifap-orange hover:bg-unifap-orange/90 text-white font-semibold text-lg px-6 py-4 rounded-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border-0"
             >
               ✈️ Enviar informações
             </Button>
