@@ -77,7 +77,7 @@ const Index = () => {
           
           {/* Subtitle */}
           <h2 className="text-xl md:text-2xl lg:text-3xl font-modern font-bold text-white mb-8 md:mb-12 drop-shadow-lg leading-relaxed">
-            A nossa história vai ganhar uma cara nova – e quem cria é você!
+            A nossa história vai ganhar uma cara nova, e quem cria é você!
           </h2>
           
           {/* CTA Button */}
@@ -113,8 +113,8 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <h4 className="font-semibold text-unifap-cyan mb-2">Contato</h4>
-              <p className="text-white/80">📧 contato@unifap.edu.br</p>
-              <p className="text-white/80">📞 (96) 3312-1700</p>
+              <p className="text-white/80">📧 fap@fapce.edu.br</p>
+              <p className="text-white/80">📞 (88) 3512-3299</p>
             </div>
             <div>
               <h4 className="font-semibold text-unifap-cyan mb-2">Recursos</h4>
@@ -129,7 +129,7 @@ const Index = () => {
           
           <div className="border-t border-white/20 pt-6">
             <p className="text-white/60 text-sm">
-              © 2024 UniFAP - Todos os direitos reservados. Concurso Mascote UniFAP.
+              © 2025 UniFAP - Todos os direitos reservados. Concurso Mascote UniFAP.
             </p>
           </div>
         </div>
