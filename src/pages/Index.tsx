@@ -122,7 +122,7 @@ const Index = () => {
                 variant="outline" 
                 className="border-unifap-cyan text-unifap-cyan hover:bg-unifap-cyan hover:text-white"
               >
-                📄 Baixar Edital do Concurso
+                📄 Acessar Edital do Concurso
               </Button>
             </div>
           </div>
