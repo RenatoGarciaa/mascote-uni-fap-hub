@@ -69,42 +69,100 @@ const MascotForm = () => {
       data.append("concordoTermos", String(formData.concordoTermos));
       data.append("declaroOriginalidade", String(formData.declaroOriginalidade));
 
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        body: data,
-      });
+      const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-      if (!response.ok) {
-        throw new Error("Erro ao enviar para o webhook");
-      }
+  const requiredFields = [
+    'nome', 'curso', 'matricula', 'turno', 'telefone', 'email',
+    'nomeMascote', 'justificativa'
+  ];
 
+  for (const field of requiredFields) {
+    if (!formData[field as keyof typeof formData]) {
       toast({
-        title: "Inscrição enviada com sucesso! 🎉",
-        description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
-      });
-
-      setFormData({
-        nome: "",
-        curso: "",
-        matricula: "",
-        turno: "",
-        telefone: "",
-        email: "",
-        nomeMascote: "",
-        arquivo: null,
-        justificativa: "",
-        concordoTermos: false,
-        declaroOriginalidade: false,
-      });
-    } catch (error) {
-      toast({
-        title: "Erro ao enviar inscrição",
-        description: "Houve um problema ao enviar os dados. Tente novamente.",
+        title: "Campo obrigatório",
+        description: `Por favor, preencha o campo ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}.`,
         variant: "destructive",
       });
-      console.error(error);
+      return;
     }
-  };
+  }
+
+  if (!formData.arquivo) {
+    toast({
+      title: "Arquivo obrigatório",
+      description: "Anexe o arquivo PNG ou PDF do mascote.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  if (!formData.concordoTermos || !formData.declaroOriginalidade) {
+    toast({
+      title: "Declarações obrigatórias",
+      description: "Marque todas as declarações antes de enviar.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  try {
+    const webhookUrl = "https://hook.us2.make.com/rrwwnw9mt93xzypyprtjci8s6svos5mq";
+    const data = new FormData();
+
+    data.append("nome", formData.nome);
+    data.append("curso", formData.curso);
+    data.append("matricula", formData.matricula);
+    data.append("turno", formData.turno);
+    data.append("telefone", formData.telefone);
+    data.append("email", formData.email);
+    data.append("nomeMascote", formData.nomeMascote);
+    data.append("justificativa", formData.justificativa);
+    data.append("concordoTermos", String(formData.concordoTermos));
+    data.append("declaroOriginalidade", String(formData.declaroOriginalidade));
+    data.append("arquivo", formData.arquivo); // O arquivo já validado
+
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      body: data,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao enviar para o webhook");
+    }
+
+    toast({
+      title: "Inscrição enviada com sucesso! 🎉",
+      description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
+    });
+
+    // Limpa o formulário
+    setFormData({
+      nome: "",
+      curso: "",
+      matricula: "",
+      turno: "",
+      telefone: "",
+      email: "",
+      nomeMascote: "",
+      arquivo: null,
+      justificativa: "",
+      concordoTermos: false,
+      declaroOriginalidade: false,
+    });
+
+    // Opcional: resetar campo de arquivo no input
+    (document.getElementById("arquivo") as HTMLInputElement).value = "";
+
+  } catch (error) {
+    toast({
+      title: "Erro ao enviar inscrição",
+      description: "Houve um problema ao enviar os dados. Tente novamente.",
+      variant: "destructive",
+    });
+    console.error(error);
+  }
+};
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -185,7 +243,7 @@ const MascotForm = () => {
                   value={formData.telefone}
                   onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                   className="bg-gray-800/80 border border-gray-600 focus:border-unifap-cyan text-white rounded-lg px-4 py-4 transition-all duration-200 hover:border-gray-500 placeholder:text-gray-400"
-                  placeholder="(11) 99999-9999"
+                  placeholder="(88) 99999-9999"
                   required
                 />
               </div>
