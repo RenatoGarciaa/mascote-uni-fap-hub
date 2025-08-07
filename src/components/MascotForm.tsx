@@ -353,7 +353,7 @@ const MascotForm = () => {
             </ul>
             <div className="text-center mt-6">
               <a
-                href="https://link-do-edital.com/edital.pdf" // 👉 substitua aqui pelo link real do edital
+                href="https://docs.google.com/document/d/1PC7JsXUgmBtSvHqqHQu0JdOHdM1bNIsk/edit?usp=sharing&ouid=100876112075400618226&rtpof=true&sd=true" // 👉 substitua aqui pelo link real do edital
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-transparent text-unifap-cyan border border-unifap-cyan px-6 py-3 rounded-lg font-medium text-sm hover:bg-unifap-cyan hover:text-white transition-all"
