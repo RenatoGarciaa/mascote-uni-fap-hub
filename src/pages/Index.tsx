@@ -90,6 +90,61 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Video Section */}
+      <section className="relative z-10 py-16 md:py-24 px-4 md:px-8 bg-gradient-to-br from-unifap-blue/95 via-unifap-blue/90 to-unifap-cyan/80 backdrop-blur-sm">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-retro font-bold text-white mb-6">
+              Veja nosso <span className="text-unifap-orange">concurso em ação</span>
+            </h2>
+            <p className="text-xl md:text-2xl text-white/90 font-modern max-w-3xl mx-auto">
+              Descubra como transformamos criatividade em identidade visual com 
+              <span className="text-unifap-cyan font-semibold"> mascotes únicos</span> e 
+              <span className="text-unifap-orange font-semibold"> designs inovadores</span>.
+            </p>
+          </div>
+          
+          <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
+            <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-unifap-blue to-unifap-cyan flex items-center justify-center">
+              {/* Video placeholder - replace with actual video embed */}
+              <div className="text-center">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  UniFAP - Criando Identidade Visual
+                </h3>
+                <p className="text-white/80">
+                  Conheça nossa universidade e a importância do nosso novo mascote
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-center justify-between mt-6 pt-6 border-t border-white/10">
+              <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                <div className="w-12 h-12 bg-gradient-to-br from-unifap-orange to-unifap-yellow rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-xl">🎨</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white">UniFAP</h4>
+                  <p className="text-white/70 text-sm">Centro Universitário</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-white/10 rounded-full border-2 border-white/20 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Form Section */}
       <section id="form-section" className="relative z-10 py-16 md:py-24 px-4 md:px-8">
         <div className="container mx-auto">
@@ -118,12 +173,18 @@ const Index = () => {
             </div>
             <div>
               <h4 className="font-semibold text-unifap-cyan mb-2">Recursos</h4>
-              <Button 
-                variant="outline" 
-                className="border-unifap-cyan text-unifap-cyan hover:bg-unifap-cyan hover:text-white"
+              <a 
+                href="https://drive.google.com/file/d/1s0MFg9WG3qn4Fwfsw0p0a03dRD5_XoiQ/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                📄 Acessar Edital do Concurso
-              </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-unifap-cyan text-unifap-cyan hover:bg-unifap-cyan hover:text-white"
+                >
+                  📄 Acessar Edital do Concurso
+                </Button>
+              </a>
             </div>
           </div>
           
