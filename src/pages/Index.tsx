@@ -105,21 +105,17 @@ const Index = () => {
           </div>
           
           <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
-            <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-unifap-blue to-unifap-cyan flex items-center justify-center">
-              {/* Video placeholder - replace with actual video embed */}
-              <div className="text-center">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  UniFAP - Criando Identidade Visual
-                </h3>
-                <p className="text-white/80">
-                  Conheça nossa universidade e a importância do nosso novo mascote
-                </p>
-              </div>
+            <div className="aspect-video rounded-xl overflow-hidden">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/ngVJwsTVrJA"
+                title="UniFAP - Criando Identidade Visual"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
             </div>
             
             <div className="flex flex-col md:flex-row items-center justify-between mt-6 pt-6 border-t border-white/10">
