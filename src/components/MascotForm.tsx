@@ -7,9 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const MascotForm = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nome: "",
     curso: "",
@@ -86,28 +88,8 @@ const MascotForm = () => {
       throw new Error("Erro ao enviar para o webhook");
     }
 
-    toast({
-      title: "Inscrição enviada com sucesso! 🎉",
-      description: "Sua proposta de mascote foi recebida. Boa sorte no concurso!",
-    });
-
-    // Limpa o formulário
-    setFormData({
-      nome: "",
-      curso: "",
-      matricula: "",
-      turno: "",
-      telefone: "",
-      email: "",
-      nomeMascote: "",
-      arquivo: null,
-      justificativa: "",
-      concordoTermos: false,
-      declaroOriginalidade: false,
-    });
-
-    // Opcional: resetar campo de arquivo no input
-    (document.getElementById("arquivo") as HTMLInputElement).value = "";
+    // Redireciona para página de agradecimento
+    navigate("/obrigado");
 
   } catch (error) {
     toast({
