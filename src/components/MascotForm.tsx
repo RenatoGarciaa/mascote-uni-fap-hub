@@ -335,7 +335,7 @@ const MascotForm = () => {
             </ul>
             <div className="text-center mt-6">
               <a
-                href="https://drive.google.com/file/d/1s0MFg9WG3qn4Fwfsw0p0a03dRD5_XoiQ/view?usp=sharing"
+                href="https://drive.google.com/file/d/1gHyG0W1fVMtDhTSxXohf6hr2gg5H_8uD/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-transparent text-unifap-cyan border border-unifap-cyan px-6 py-3 rounded-lg font-medium text-sm hover:bg-unifap-cyan hover:text-white transition-all"
